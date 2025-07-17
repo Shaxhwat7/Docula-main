@@ -1,11 +1,11 @@
-import { prisma } from "@/lib/prisma";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { Prisma } from "@prisma/client/extension";
+import { PrismaClient } from "@prisma/client";
 import { User } from "lucide-react";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import Email from "next-auth/providers/email";
-
+import bcrypt from "bcrypt"
+const prisma = new PrismaClient();
 const handler = NextAuth({
     adapter:PrismaAdapter(prisma),
     session:{
@@ -22,9 +22,9 @@ const handler = NextAuth({
                 const user = await prisma.user.findUnique({
                     where:{Email:credentials?.Email},
                 });
-                if(!user || !user.password) return null;
+                if(!user || !user.password || !credentials?.password) return null;
 
-                const isValid = await bcrypt.compare(credentials?.password, user.password);
+                const isValid = await bcrypt.compare(credentials.password, user.password);
                 if(!isValid) return null
 
                 return user;
