@@ -4,8 +4,8 @@ import Heros from "./-Componenets/heros"
 
 const LandingPage = () => {
     return (
-        <div className="min-h-full flex flex-col">
-            <div className="flex flex-col items-center justify-center md:justify-start text-center gap-y-8 flex-1 px-6 py-10">
+        <div className="h-screen flex flex-col justify-between">
+            <div className="flex flex-col items-center justify-center text-center gap-y-8 px-6 py-10">
                 <Headingcompo/>
                 <Heros/>
             </div>
